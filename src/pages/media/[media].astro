@@ -1,0 +1,88 @@
+---
+import Layout from "../../layouts/layout.astro"
+import Intro from "../../components/Intro.vue"
+import Whatsapp from "../../components/Whatsapp.vue"
+import MediaElement from "../../components/MediaElement.vue"
+import {Directus} from "@directus/sdk"
+
+// src/pages/media/[media].astro
+export async function getStaticPaths() {
+  const directus = new Directus(import.meta.env.PUBLIC_CMS_LOCATION)
+
+	const media_data = await directus.items('m_gallery').readByQuery({
+		filter:{
+			"_and":[
+				{
+					"status":{
+						"_eq":"published"
+					}
+				}
+			]
+		},
+		limit:-1,
+		fields:['slug']
+	}).catch(console.error('A network error occured. Unable to load gallery'))
+
+	const media = media_data.data
+
+  let store = []
+
+  media.map((item) => {
+    let data = {}
+    data.params = {}
+    data.params.media = item.slug
+    store.push(data)
+  })
+  
+  return store
+}
+
+const {media} = Astro.params
+const data_url = import.meta.env.PUBLIC_CMS_LOCATION
+const directus = new Directus(data_url)
+
+const gallery_data = await directus.items('m_gallery').readByQuery({
+	filter:{
+		"_and":[
+			{
+				"status":{
+					"_eq":"published"
+				}
+			},
+			{
+				"slug":{
+					"_eq": media
+				}
+			}
+		]
+	},
+	fields:['label,slug,featured_image,meta_description,type,files.*'],
+	deep:{
+    'files':{
+      "_limit":30
+    }
+  }
+}).catch(console.error('A network error occured. Unable to load gallery'))
+
+const images = gallery_data.data[0]
+---
+
+<Layout title={images.label} description={images.meta_description}>
+	<Intro 
+  	background={`${import.meta.env.PUBLIC_CMS_LOCATION}assets/${images.featured_image}`}
+  	title={images.label}
+		description=""
+  />
+  <div class="container mx-auto my-6">
+  	<div class="grid grid-cols-1 gap-2 my-2">
+    	<div class="bg-white dark:bg-stone-700 p-2 shadow-md rounded-lg relative">
+			  <MediaElement 
+			   client:load
+			   images={images}
+			   link={import.meta.env.PUBLIC_CMS_LOCATION}
+			  />
+    	</div>
+    </div>
+  </div>
+  <Whatsapp client:load />
+</Layout>

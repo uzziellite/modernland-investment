@@ -1,0 +1,169 @@
+---
+import Layout from "../layouts/layout.astro"
+import Intro from "../components/Intro.vue"
+import Whatsapp from "../components/Whatsapp.vue"
+
+const data_url = import.meta.env.PUBLIC_CMS_LOCATION
+
+const faqs = [
+	{
+		"question":"Do you allow installments",
+		"answer":"Yes we do"
+	},
+	{
+		"question":"Do you allow customers to develop their plots once they make a deposit?",
+		"answer":"Yes, customers can start developing their plots once they make  a 50% deposit of the agreed price and clear the balance within 3, 6 or 12 months."
+	},
+	{
+		"question":"How long do you take to process title deeds?",
+		"answer":"We process title deeds in the shortest time possible. At most we endeavour to deliver it within 60 days"
+	},
+	{
+		"question":"What payment methods do you accept?",
+		"answer":"A client can make payments through the following methods: Direct bank deposits, Bank transfers,MPESA, Cheques (Current and bankers cheques)"
+	},
+	{
+		"question":"When do you have site visits?",
+		"answer":"Every day from Monday to Saturday. You can call our offices to organize the visit"
+	},
+	{
+		"question":"Where are your offices located?",
+		"answer":"Ruiru, Greec Towers 2nd Floor in RM C1"
+	},
+	{
+		"question":"What are your official office numbers",
+		"answer":"0701 123 456 / 0701 333 999"
+	},
+	{
+		"question":"How can diaspora clients purchase your plots?",
+		"answer":"We are in constant communication with our Diaspora Investors, guiding them on acquiring their property of choice. After a client identifies the property they are interested in from our available properties, we are able to guide them throughout  the legal process of land acquisition.The client thereafter collects the title deed from our office or appoints a person to do it on his/her behalf but has to have an authorization letter that instructs us to issue the title deed."
+	},
+	{
+		"question":"Are your plots free hold or lease hold?",
+		"answer":"All plots are free hold"
+	}
+]
+---
+
+<Layout title="About Us | Modern Land Investment" description="We enable middle class income earners to acquire genuine land at affordable prices through flexible mode of payment">
+	<Intro 
+		background="/images/property.webp"
+		title="About Modern Land investment"
+		description="Modern land investment limited is a limited liability company duly registered under the company ACT 2015 in the republic of Kenya. The company was registered in the year 2020.the company	mission is to empower ordinary Kenyans and middle class income earners to acquire genuine land at affordable prices through flexible mode of payment. We pride in seeing ordinary lives transformed for the glory of God."
+	/>
+	<div class="container mx-auto p-4">
+  	<div class="grid md:grid-cols-2 gap-2">
+  		<div class="relative grid bg-white dark:bg-stone-900 mb-8 shadow-lg rounded-lg hover:shadow-2xl mt-12">
+        <div class="px-4 py-5">
+          <div class="text-white p-3 text-center w-12 h-12 mb-5 shadow-lg rounded-full bg-yellow-600 mx-auto">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+          </div>
+          <h6 class="text-xl font-semibold text-center dark:text-white">
+          	Our Vision
+          </h6>
+          <p class="text-lg mt-2 mb-4 text-center dark:text-white">
+            To be among the leading land companies in Kenya, that provides solution to ordinary people on
+						land ownership and property investment.
+          </p>
+        </div>
+      </div>
+      <div class="relative grid bg-white dark:bg-stone-900 mb-8 shadow-lg rounded-lg hover:shadow-2xl mt-12">
+        <div class="px-4 py-5">
+          <div class="text-white p-3 text-center w-12 h-12 mb-5 shadow-lg rounded-full bg-green-400 mx-auto">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+          <h6 class="text-xl font-semibold text-center dark:text-white">
+          	Our Mission
+          </h6>
+          <p class="text-lg mt-2 mb-4 text-center dark:text-white">
+            To glorify God by putting a lasting positive impact to ordinary Kenyans, by providing affordable
+						lands in prime areas with ready title deeds through flexible modes of payment, thus finding joy in
+						seeing ordinary people’s lives transformed.
+          </p>
+        </div>
+      </div>
+  	</div>
+  	<div class="my-2 grid gap-2 p-4 bg-white dark:bg-stone-900 shadow-md rounded-md">
+  		<h2 class="text-2xl font-semibold text-center dark:text-white">
+  			The CEO
+  		</h2>
+  		<div class="grid md:grid-cols-2 gap-2">
+  			<img src={`${data_url}assets/a6fc5b25-9560-4e4a-b1c6-0342ad4ed88b`} class="rounded-md" width="580" height="360">
+    		<p class="text-lg dark:text-white">
+    			Mr kihoro muturi is the CEO of modern land investment. He is a man on a mission and devoted to his work to fulfill the company mission of making land affordable to low income earners and irregular labourers in kenya by providing low cost plots through flexible mode of payments. He developed an interest in real estate after realising the inadequacy and the struggle thereon of housing for majority of the young upcoming families. He is actively involved in day to day running of the company together with other levels of management with a hope of fulfilling his vision of bridging the gap in the society and serving his generation to the full.
+    		</p>
+  		</div>
+  	</div>
+  	<div class="grid gap-2 p-4 bg-white dark:bg-stone-900 shadow-md rounded-lg">
+  		<h2 class="text-2xl font-semibold text-center dark:text-white">
+  			Our Pride
+  		</h2>
+  		<div class="grid md:grid-cols-2 gap-2">
+    		<p class="text-lg dark:text-white">
+    			We pride in our ability to deliver our promises by offering genuine properties with tittle deeds.<br> We help guide our clients in making wise decisions when investing with us in the right places where
+					land appreciates faster and also viable areas for immediate settlement.<br>
+					We also pride in professional work that we deploy to enable our clients exit strategy a pleasure.
+					We are a team guided by faith in the word of God and hence all we do is for God’s glory.
+    		</p>
+  			<img src={`${data_url}assets/740fe542-7c94-4a5e-a60c-8dcec1e25c5b?fit=cover&height=920&width=1280&format=webp`} class="rounded-md" width="580" height="360">
+  		</div>
+  	</div>
+  	<div class="grid gap-2 p-4 bg-white dark:bg-stone-900 shadow-lg hover:shadow-2xl my-4 rounded-lg">
+  		<h2 class="text-2xl font-semibold text-center dark:text-white">
+  			Core Values
+  		</h2>
+  		<div class="grid md:grid-cols-2 gap-2">
+    		<img src={`${data_url}assets/6af71fb7-6500-4005-9429-05be30bd6f7c?fit=cover&height=360&width=580&format=webp`} class="rounded-md" width="580" height="360">
+  			<ul class="text-stone-800 grid gap-2 font-normal dark:text-white text-lg">
+					<li>1. Trust</li>
+					<li>2. Honesty</li>
+					<li>3. Integrity</li>
+					<li>4. Professionalism</li>
+					<li>5. Accountability</li>
+  			</ul>
+  		</div>
+  	</div>
+  	<!--<div class="grid gap-2 p-4 bg-white dark:bg-stone-900 shadow-md my-4 rounded-lg">
+    	<h2 class="text-2xl font-semibold text-center dark:text-white">
+  			Our Team
+  		</h2>
+  		<div class="grid md:grid-cols-2 gap-2">
+  			<img src={`import.meta.env.PUBLIC_CMS_LOCATIONassets/${image.directus_files_id}?fit=cover&height=500&width=900`} v-for="image in images.team">
+  		</div>
+  	</div>-->
+  	<div class="grid gap-2 p-4 bg-white dark:bg-stone-900 shadow-md my-4 rounded-lg">
+    	<h2 class="text-2xl font-semibold text-center dark:text-white">
+  			Note from management
+  		</h2>
+  		<p class="text-stone-900 text-lg dark:text-white">
+  			Our company is actively involved in the welfare of our communities and gives back by visiting children’s homes with donations, sponsoring youth games like football, supporting the elderly and any other needy situation within our reach.
+  		</p>
+  	</div>
+  	<div class="grid gap-2 p-4 bg-white dark:bg-stone-900 shadow-md my-4 rounded-lg">
+    	<h2 class="text-2xl font-semibold text-center dark:text-white">
+  			Note from the sales team
+  		</h2>
+  		<p class="text-stone-900 text-lg dark:text-white">
+  			We are constantly reaching out to our clients to ensure full customer satisfaction. We endeavor to answer all questions and handle all concerns to ensure maximum customer satisfaction
+  		</p>
+  	</div>
+  	<div class="grid gap-2 p-4 bg-white dark:bg-stone-900 shadow-lg hover:shadow-2xl my-4 rounded-lg">
+  		<h2 class="text-2xl font-semibold text-center dark:text-white">
+  			Frequently asked questions
+  		</h2>
+  		{
+  			faqs.map((item) => (
+		  		<div class="border-2 border-stone-300 p-2 cursor-pointer dark:text-white">
+		  			<div class="font-semibold text-lg">
+		  				{item.question}
+		  			</div>
+		  			<span class="text-stone-800 dark:text-white">
+		  				{item.answer}
+		  			</span>
+		  		</div>
+  			))
+  		}
+  	</div>
+  </div>
+  <Whatsapp client:load />
+</Layout>

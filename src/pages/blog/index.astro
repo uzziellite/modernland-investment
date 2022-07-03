@@ -1,0 +1,62 @@
+---
+import Layout from "../../layouts/layout.astro"
+import Intro from "../../components/Intro.vue"
+import Whatsapp from "../../components/Whatsapp.vue"
+import {Directus} from "@directus/sdk"
+
+const data_url = import.meta.env.PUBLIC_CMS_LOCATION
+const directus = new Directus(data_url)
+const store = await directus.items('m_blog').readByQuery({
+	filter:{
+		"_and":[
+			{
+				"status":{
+					"_eq":"published"
+				}
+			},
+			{
+				"category":{
+					"_contains": "blog"
+				}
+			}
+		]
+	},
+	limit:30
+}).catch(console.error('A network error occured. Unable to load blogs'))
+
+const data = store.data
+
+const setExcerpt = (text) => {
+	return `${text.slice(0,128)} [&hellip;]`
+}
+---
+
+<Layout title="Blog - Modern Land Investment Limited" description="Stay up-to-date on all the latest blog articles from Modern Land Investment. We provide educative articles about property to all our clientele">
+	<Intro 
+  	background={`${import.meta.env.PUBLIC_CMS_LOCATION}assets/51a8268b-04fc-4ba1-abc9-e157f053ef82?fit=cover&format=webp`}
+  	title="Blog"
+		description="Stay updated on all the latest information from Modern Land Investment"
+  />
+  <div class="container mx-auto p-4">
+  	<div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6 mt-6 p-2">
+  		{
+  			data.map((item) => (
+					<a href={`/blog/${item.slug}`} class="bg-gray-100 dark:bg-gray-900 rounded-xl shadow-md dark:text-white">
+						<figure>
+		          <img class="w-full rounded-tr-xl rounded-tl-xl" src={`${data_url}assets/${item.featured_image}?fit=cover&height=250&width=400`} alt={item.blog_title}>
+		          <div class="px-2">
+		            <h2 class="font-black pb-2 dark:text-white">
+		              {item.blog_title}
+		            </h2>
+		            <figcaption class="font-medium font-serif">
+		              <div class="dark:text-white" set:html={setExcerpt(item.blog_content)}></div>
+		            </figcaption>
+		          </div>
+		        </figure>
+		      </a>
+  			))
+  		}
+		</div>
+  </div>
+  <Whatsapp client:load />
+</Layout>

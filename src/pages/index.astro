@@ -1,0 +1,278 @@
+---
+import Layout from "../layouts/layout.astro"
+import {Directus} from "@directus/sdk"
+import Whatsapp from "../components/Whatsapp.vue"
+import BookingForm from "../components/BookingForm.vue"
+import Carousel from "../components/Carousel.vue"
+
+const data_url = import.meta.env.PUBLIC_CMS_LOCATION
+const directus = new Directus(data_url)
+const blog_data = await directus.items('m_blog').readByQuery({
+  filter:{
+    "_and":[
+      {
+        "status":{
+          "_eq":"published"
+        }
+      },
+      {
+        "category":{
+          "_contains":"blog"
+        }
+      }
+    ]
+  },
+  limit:3
+}).catch(console.error('A network error occured. Unable to load blogs'))
+
+const plot_data = await directus.items('m_plots').readByQuery({
+  filter:{
+    "_and":[
+      {
+        "status":{
+          "_eq":"published"
+        }
+      }
+    ]
+  },
+  limit:12,
+  fields:['plot_name,plot_location,plot_price,suitability,featured_image,slug'],
+}).catch(console.error('A network error occured. Unable to load plots'))
+
+const data = blog_data.data
+const plots = plot_data.data
+
+const setExcerpt = (text) => {
+	return `${text.slice(0,128)} [&hellip;]`
+}
+
+const why = [
+  'Our lands are affordable.',
+  'Our properties are situated in prime areas location giving our clients the advantage of reaping big.',
+  'Ready title deeds.',
+  'Our properties are strategically located for ease of access.',
+  'Our terms of payment are flexible and friendly to both regular and irregular income earners.',
+  'We offer free visits.',
+  'We do extensive due diligence before purchasing any of our properties.',
+  'Our properties are value added.'
+]
+---
+
+<Layout title="Modern Land Investment" description="Modern Land Investment is a company that specializes in the sale and management of property">
+	<Carousel client:load />
+  <div class="container mx-auto px-4 mt-24 xl:mt-8">
+    <h1 class="text-2xl md:text-3xl lg:text-4xl uppercase text-center dark:text-white">
+      Modern Land investment your home of choice
+    </h1>
+    <p class="text-center dark:text-white lg:text-xl text-sm py-2">
+    	At modern land investment limited, we pride ourselves in delivering property that is of high quality to our customers. We have enabled various individuals to own property. 
+    </p>
+    <div class="grid lg:grid-cols-3 gap-4">
+      <div class="text-center bg-white dark:bg-stone-900 shadow-md rounded-lg">
+        <div class="relative flex flex-col min-w-0 break-words w-full">
+          <div class="px-4 py-5 flex-auto">
+            <div class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-md rounded-full bg-red-400">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+            </div>
+            <h6 class="text-xl font-semibold dark:text-white">
+            	Professionalism
+            </h6>
+            <p class="text-lg mt-2 mb-4 dark:text-white">
+              Professionalism is our core business principle. We pride ourselves as being honest and transparent in all our business dealings.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center bg-white dark:bg-stone-900 shadow-md rounded-lg">
+        <div class="relative flex flex-col min-w-0 break-words w-full">
+          <div class="px-4 py-5 flex-auto">
+            <div
+              class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-md rounded-full bg-sky-700"
+            >
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+            </div>
+            <h6 class="text-xl font-semibold dark:text-white">
+            	Creativity
+            </h6>
+            <p class="text-lg mt-2 mb-4 dark:text-white">
+              Our team is comprised of creative individuals who are constantly on the lookout for ways in which we can add value to the property that we offer
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center bg-white dark:bg-stone-900 shadow-md rounded-lg">
+        <div
+          class="relative flex flex-col min-w-0 break-words w-full">
+          <div class="px-4 py-5 flex-auto">
+            <div
+              class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-md rounded-full bg-green-600"
+            >
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            </div>
+            <h6 class="text-xl font-semibold dark:text-white">
+            	Customer First
+            </h6>
+            <p class="text-lg mt-2 mb-4 dark:text-white">
+              We highly value our customers. We belive that we have to provide property that will benefit our customers the most. That is our joy in business
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container mx-auto my-6">
+    <h2 class="text-2xl md:text-3xl lg:text-4xl uppercase text-center dark:text-white">
+      Affordable plots for sale within Nairobi
+    </h2>
+    <p class="text-center dark:text-white lg:text-xl text-sm">
+    	Prime plots for sale at Goshen Gardens Joska Mutalia area. 2 km from the main Kangundo tarmac road
+    </p>
+    <div class="grid md:grid-cols-2 gap-x-6 gap-y-4 mt-6 p-2">
+    	{
+    		plots.map((item) => (
+		      <a href={`/properties/${item.slug}`} class="bg-gray-100 dark:bg-stone-900 rounded-xl shadow-md cursor-pointer">
+		      	<div>
+		          <img class="w-full rounded-tr-xl rounded-tl-xl" src={`${data_url}assets/${item.featured_image}?fit=cover&height=720&width=1280&format=webp`} alt={item.plot_name}>
+		          <div class="px-2 grid">
+		            <h2 class="font-black pb-2 dark:text-white uppercase">
+		              {item.plot_name}
+		            </h2>
+		            <div class="flex flex-col space-y-2 dark:text-white">
+		            	<span class="capitalize font-semibold">
+		            		Ideal for:
+		            	</span>
+		            	<span class="font-regular text-stone-800 capitalize dark:text-white">
+		            		{item.suitability}
+		            	</span>
+		            </div>
+		            <div class="flex flex-col space-y-2 dark:text-white">
+		            	<span class="capitalize font-semibold">
+		            		Location:
+		            	</span>
+		            	<span class="font-regular dark:font-thin text-stone-800 dark:text-white">
+		            		{item.plot_location}
+		            	</span>
+		            </div>
+		            <div class="flex space-x-3 dark:text-white">
+		            	<span class="capitalize font-semibold">
+		            		Price:
+		            	</span>
+		            	<strong class="font-semibold text-red-600 dark:text-white">
+		            		{item.plot_price}
+		            	</strong>
+		            </div>
+		          </div>
+		        </div>
+		      </a>
+    		))
+    	}
+    </div>
+    <div class="grid my-4 place-items-center">
+      <a href="/properties">
+        <button class="flex space-x-3 bg-amber-600 dark:bg-stone-700 px-4 py-2 text-white rounded-full">
+          <span>
+            See all
+          </span>
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </button>
+      </a>
+    </div>
+  </div>
+  <div class="container mx-auto py-4">
+  	<div class="grid gap-2 p-4 bg-white dark:bg-stone-900 shadow-md hover:shadow-2xl my-4 rounded-lg">
+  		<h2 class="text-2xl font-semibold text-center dark:text-white capitalize">
+  			Why Buy property from Us?
+  		</h2>
+  		<div class="grid md:grid-cols-2 gap-2">
+    		<video class="w-full my-auto" controls poster={`${data_url}assets/203f50e1-5d1b-4b2c-b0df-99f01f0860fd`} preload="">
+          <source src={`${data_url}assets/d05495b8-2247-4768-a3fc-5840fd7991ff`} type="video/mp4">   
+        </video>
+  			<ol class="grid gap-2 font-normal dark:text-white">
+  				{
+  					why.map((item,index) => (
+							<li class="text-lg">
+								{index+1}. {item}
+							</li>
+						))
+  				}
+  			</ol>
+  		</div>
+  	</div>
+  </div>
+  <div class="container mx-auto my-12 rounded-md" id="book">
+    <h2 class="text-2xl md:text-3xl lg:text-4xl capitalize text-center dark:text-white font-semibold">
+      Book site visits
+    </h2>
+    <p class="text-center text-stone-800 dark:text-white">
+    	Secure your free site visits from Monday to saturday.
+    </p>
+    <div class="grid md:grid-cols-2 gap-2 p-2">
+    	<BookingForm client:load />
+      <img src={`${data_url}assets/51a8268b-04fc-4ba1-abc9-e157f053ef82?fit=cover&height=920&width=1280&format=webp`} class="my-auto">
+    </div>
+  </div>
+  <div class="container mx-auto py-4">
+		<div class="grid md:grid-cols-3 gap-2 lg:gap-x-6 mt-2">
+			<div class="grid place-content-center bg-white dark:bg-stone-800 shadow-md p-2 rounded-xl">
+				<div class="text-white p-3 text-center w-12 h-12 mb-5 shadow-md rounded-full bg-red-600 mx-auto">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        </div>
+				<span class="text-red-600 dark:text-white font-black lg:text-4xl text-center">
+					2
+				</span>
+				<span class="text-stone-800 dark:text-white lg:text-2xl font-semibold">
+					Projects Done
+				</span>
+			</div>
+			<div class="grid place-content-center bg-white dark:bg-stone-800 shadow-md p-2 rounded-xl">
+				<div class="text-white p-3 text-center w-12 h-12 mb-5 shadow-md rounded-full bg-red-600 mx-auto">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+        </div>
+				<span class="text-red-600 dark:text-white font-black lg:text-4xl text-center">
+					100+
+				</span>
+				<span class="text-stone-800 dark:text-white lg:text-2xl font-semibold">
+					Title Deeds
+				</span>
+			</div>
+			<div class="grid place-content-center bg-white dark:bg-stone-800 shadow-md p-2 rounded-xl">
+				<div class="text-white p-3 text-center w-12 h-12 mb-5 shadow-md rounded-full bg-red-600 mx-auto">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+        </div>
+				<span class="text-red-600 dark:text-white font-black lg:text-4xl text-center">
+					2+
+				</span>
+				<span class="text-stone-800 dark:text-white lg:text-2xl font-semibold">
+					Years Experience
+				</span>
+			</div>
+		</div>
+  </div>
+  <div class="container mx-auto py-4">
+    <h2 class="text-2xl md:text-3xl lg:text-4xl uppercase text-center dark:text-white">
+      Latest from our blog
+    </h2>
+    <div class="grid md:grid-cols-3 gap-6 mt-6 p-2">
+    	{
+    		data.map((item) => (
+		      <a href={`/blog/${item.slug}`}>
+		        <figure class="bg-gray-100 dark:bg-stone-900 rounded-xl shadow-2xl cursor-pointer">
+		          <img class="w-full rounded-tr-xl rounded-tl-xl text-white" src={`${data_url}assets/${item.featured_image}?fit=cover&height=150&width=300&format=webp`} alt={item.blog_title}>
+		          <div class="px-2">
+		            <h2 class="font-black pb-2 dark:text-white text-lg">
+		              {item.blog_title}
+		            </h2>
+		            <figcaption class="font-medium font-serif">
+		              <div class="text-lg dark:text-white" set:html="setExcerpt(item.blog_content)"></div>
+		            </figcaption>
+		          </div>
+		        </figure>
+		      </a>
+    		))
+    	}
+    </div>
+  </div>
+  <Whatsapp client:load />	
+</Layout>

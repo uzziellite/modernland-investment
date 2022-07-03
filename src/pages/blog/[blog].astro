@@ -1,0 +1,77 @@
+---
+import Layout from "../../layouts/layout.astro"
+import Intro from "../../components/Intro.vue"
+import Whatsapp from "../../components/Whatsapp.vue"
+import {Directus} from "@directus/sdk"
+
+// src/pages/blog/[blog].astro
+export async function getStaticPaths() {
+  const directus = new Directus(import.meta.env.PUBLIC_CMS_LOCATION)
+
+	const blogs_data = await directus.items('m_blog').readByQuery({
+		filter:{
+			"_and":[
+				{
+					"status":{
+						"_eq":"published"
+					}
+				}
+			]
+		},
+		limit:-1,
+		fields:['slug']
+	}).catch(console.error('A network error occured. Unable to load blogs'))
+
+	const blogs = blogs_data.data
+
+  let store = []
+
+  blogs.map((item) => {
+    let data = {}
+    data.params = {}
+    data.params.blog = item.slug
+    store.push(data)
+  })
+  
+  return store
+}
+
+const {blog} = Astro.params
+const data_url = import.meta.env.PUBLIC_CMS_LOCATION
+const directus = new Directus(data_url)
+
+const blog_data = await directus.items('m_blog').readByQuery({
+	filter:{
+		"_and":[
+			{
+				"status":{
+					"_eq":"published"
+				}
+			},
+			{
+				"slug":{
+					"_eq": blog
+				}
+			}
+		]
+	}
+}).catch(console.error('A network error occured. Unable to load blogs'))
+
+const data = blog_data.data[0]
+---
+
+<Layout title={data.blog_title} description={data.blog_meta_description}>
+	<Intro 
+  	background={`${data_url}assets/${data.featured_image}?fit=cover&height=512&width=720`}
+  	title={data.blog_title}
+		description=""
+  />
+  <div class="container mx-auto my-4 p-4">
+		<div class="grid gap-6 place-items-center">
+			<div class="grid lg:max-w-3xl place-items-center">
+				<div class="prose lg:prose-lg leading-loose dark:prose-invert" set:html={data.blog_content}></div>
+			</div>
+		</div>
+	</div>
+	<Whatsapp client:load />
+</Layout>
